@@ -170,7 +170,7 @@ void CHW::CreateDevice( HWND m_hWnd, bool move_window )
 							 "Please try to restart the game.\n"
 							 "CreateDevice returned 0x%08x", R);
 		FlushLog();
-		Debug.do_exit("Failed to initialize graphics hardware.\nPlease try to restart the game.");
+        FATAL("Failed to initialize graphics hardware.\nPlease try to restart the game.");
 	};
 	R_CHK(R);
 
@@ -269,31 +269,6 @@ D3DFORMAT CHW::selectDepthStencil	(D3DFORMAT fTarget)
 #pragma todo("R3 need to specify depth format")
 	return D3DFMT_D24S8;
 }
-
-void CHW::ResizeWindowProc(WORD h, WORD w)
-{
-#if 0
-	bool bWindowed = !psDeviceFlags.is(rsFullscreen) || strstr(Core.Params, "-editor");
-	///////////////////////////////////////
-	if (bWindowed)
-	{
-		DXGI_SWAP_CHAIN_DESC &cd			= m_ChainDesc;
-		DXGI_MODE_DESC	&desc				= m_ChainDesc.BufferDesc;
-		HRESULT R;
-		///////////////////////////////////////
-		memset								(&cd,	0, sizeof(DXGI_SWAP_CHAIN_DESC));	// sc to NULL
-		memset								(&desc, 0, sizeof(DXGI_MODE_DESC));
-		///////////////////////////////////////
-		desc.Width							= w;
-		desc.Height							= h;
-		desc.RefreshRate.Numerator			= 60;
-		desc.RefreshRate.Denominator		= 1;
-		m_pSwapChain->SetFullscreenState	(FALSE, 0);
-		CHK_DX						(m_pSwapChain->ResizeTarget(&desc));
-	}
-#endif
-}
-
 
 void CHW::selectResolution( u32 &dwWidth, u32 &dwHeight, BOOL bWindowed )
 {
